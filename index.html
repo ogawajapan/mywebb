@@ -1,125 +1,175 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="～すぐれて　ゆたかに　たくましく～">
-<meta name="viewport" content="width=device-width">
-<title>SAMPLE COMPANY | 最新技術と自然との調和を目指す</title>
-<link rel="stylesheet" media="all" href="css/style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<script src="js/script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズページ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 10px; /* 余白を追加 */
+        }
+        h1 {
+            font-size: 2em;
+            color: #4682b4;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%; /* 幅を100%に設定 */
+            max-width: 500px; /* 最大幅を設定 */
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            text-align: left; /* テキストを左寄せにします */
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4682b4;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px; /* ボタンの上部のマージンを追加します */
+        }
+        button:hover {
+            background-color: #5a9bd5;
+        }
+        #explanation {
+            margin-top: 20px;
+            font-size: 1.2em;
+            display: none; /* 解説を最初は非表示にします */
+        }
+        #next-button {
+            display: none; /* 最初は次の問題ボタンを非表示にします */
+        }
+
+        @media only screen and (max-width: 600px) {
+            /* スマートフォン向けのスタイル調整 */
+            form {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <h1>クイズ</h1>
+    <form id="quiz-form">
+        <label id="question-label" for="answer">質問：組織で働く人にそれぞれ割り当てられた仕事を何というか？</label>
+        <input type="text" id="answer" name="answer">
+        <button type="button" onclick="checkAnswer()">回答</button>
+        <div id="result"></div>
+        <div id="explanation"></div>
+        <button id="next-button" type="button" onclick="loadNextQuestion()">次の問題へ</button>
+    </form>
 
-<nav id="mainnav">
-	<p id="menuWrap"><a id="menu"><span id="menuBtn"></span></a></p>
-	<div class="panel">
-		<ul>
-			<li><a href="#header">TOP</a></li>
-			<li><a href="#sec01">教育目標</a></li>
-			<li><a href="#sec02">東高生の一日・校章</a></li>
-			<li><a href="#sec03">学校生活</a></li>
-			
-		</ul>
-	</div>
-</nav>
+    <script>
+        const questions = [
+            {
+                question: "組織で働く人にそれぞれ割り当てられた仕事を何というか？",
+                correctAnswer: "職務",
+                explanation: "それぞれの役割や責任を持って行う仕事のことです。"
+            },
+            {
+                question: "職務を分担する組織上の地位のことを何というか？",
+                correctAnswer: "職位",
+                explanation: "組織内での地位や役割を表す用語です。"
+            },
+            {
+                question: "取締役会や社長，副社長，専務などがある，企業経営の基本的な方針を決定し，経営責任を持つ職位のことを何というか？",
+                correctAnswer: "経営者層",
+                explanation: "企業の重要な意思決定を行い、経営責任を負う役職のことです。"
+            },
+            {
+                question: "企業経営の基本的な方針を具体化する行動計画を立て，従業員の仕事の進め方を把握し，評価する職位を何というか？",
+                correctAnswer: "管理者層",
+                explanation: "企業の戦略を具体化し、従業員の業務を管理する役職です。"
+            },
+            {
+                question: "仕入，製品ごと，事業ごと，地域ごとなどに部門化して，それぞれの部門の事業を行う組織のことを何というか？，販売などの職能や機能などで編成される組織を何というか？",
+                correctAnswer: "職能別組織",
+                explanation: "企業を異なる部門に分け、それぞれの部門が特定の事業を行う組織構造です。"
+            }
+        ];
 
-<header id="header">
-	<img src="/Users/shokupanman/Downloads/メイン.jpeg" alt="">
-	<div id="slogan">
-		<h1>Higashiura High School</h1>
-		<h2>～すぐれて　ゆたかに　たくましく～</h2>
-	</div>
-</header>
+        let currentQuestionIndex = 0;
 
-<!-- 教育目標 -->
-<section id="sec01">
-	<header>
-		<h2>教育目標</h2>
-	</header>
-	<div class="vision">
-		教育基本法の精神にのっとり、知・徳・体の統一ある人間形成を図り、
-		国家及び社会の有為な形成者として使命感にあふれた人間の育成をめざす。
-		<p>そのため</p>
-		<p>・知性をみがき、公正な判断力をもつ人</p>
-		<p>・自他を愛し、情操豊かな社会性のある人</p>
-		<p>・心身を鍛え、責任感と実行力のある人　　　　を育成する。</p>
-	</div>
-</section>
-<!-- // 教育目標 -->
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value;
+            const resultDiv = document.getElementById('result');
+            const explanationDiv = document.getElementById('explanation');
+            const nextButton = document.getElementById('next-button');
+            const currentQuestion = questions[currentQuestionIndex];
+            
+            if (userAnswer.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()) {
+                resultDiv.textContent = '正解です！';
+                resultDiv.style.color = "green";
+                explanationDiv.style.display = "none"; // 正解時に解説を非表示にします
+                nextButton.style.display = "block"; // 正解時に次の問題ボタンを表示します
+            } else {
+                resultDiv.textContent = '';
+                explanationDiv.style.display = "block"; // 不正解時に解説を表示します
+                explanationDiv.innerHTML = `不正解です。正解は「${currentQuestion.correctAnswer}」です。<br><br>`;
+                explanationDiv.innerHTML += `解説: ${currentQuestion.explanation}`;
+                nextButton.style.display = "block"; // 不正解時に次の問題ボタンを表示します
+            }
+        }
 
-<!-- 東高生の一日 -->
-<section id="sec02">
-	<div class="wrap">
-		<p class="bg"><img src="/Users/shokupanman/Downloads/higashiurakoukou.jpeg" alt=""></p>
-		<div class="txt">
-			<div class="vMid">
-				<h2>東高生の一日</h2>
-				<p>東高生の一日
-					東浦高校の生活は、始業のチャイムの前に流れる「校歌」とともに始まります。
-					学校生活の中心は当然1日6時間行われる授業ですが、授業においても本校の特徴である「個を生か
-					した、きめ細かく、手厚い指導」のために、多くの時間で「少人数」による授業を行なっています。
-				</p>
-			</div>
-		</div>
-	</div>
-	<div id="sec02_02" class="wrap">
-		<p class="bg"><img src="/Users/shokupanman/Downloads/37JaeHWHN6fUcGE1695824636_1695824710.png" alt=""></p>
-		<div class="txt">
-			<div class="vMid">
-				<h2>校章</h2>
-				<p>２枚の葉の上に立つ「東高」は東浦高校が未来に向かって発展する姿を意味し、 左右の対称は”調和"
-					を、鋭い葉の形は”たくましさと優れた知性”を表現しています。
-					また「東高」を包むように配置された２枚の葉は豊かな人間を育成することを意味しています。
-				</p>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- //東高生の一日  -->
+        function loadNextQuestion() {
+            const questionLabel = document.getElementById('question-label');
+            const resultDiv = document.getElementById('result');
+            const explanationDiv = document.getElementById('explanation');
+            const nextButton = document.getElementById('next-button');
 
-<!-- 学校生活 -->
-<section id="sec03">
-	<div class="inner">
-		<ul class="col3">
-			<li>
-				<h2>部活動</h2>
-				<img src="/Users/shokupanman/Downloads/淡い緑 シンプルな作品紹介のインスタグラム投稿 (3).png" width="288" height="288" alt="">
-				<p>部活動は運動部が１０部、文化部が６部あります。
-					各活動がそれぞれ目標を立て計画的に練習に取り組み、心身ともにたくましい青年の育成を図っています。
-					<p>１年生は全員参加が原則です。</p>
-				</p>
-			</li>
-			<li>
-				<h2>類型・コース</h2>
-				<img src="/Users/shokupanman/Downloads/淡い緑 シンプルな作品紹介のインスタグラム投稿.png" width="288" height="288" alt="">
-				<p>本校には進路志望別に３種類の類型・コースがあります。
-					<p>・特別進学類型	 大学進学希望者向けの類型</p>
-					<p>・総合類型	    本校の中心となる類型で、幅広い進路選択に対応</p>
-					<p>・情報ビジネスコース	  情報活用に関する知識や技術を学習</p>
-					<p>                     ※総合類型の人たちが２年生から選択可能 </p>
-				</p>
-			</li>
-			<li>
-				<h2>委員会</h2>
-				<img src="/Users/shokupanman/Downloads/淡い緑 シンプルな作品紹介のインスタグラム投稿 (4).png" width="288" height="288" alt="">
-				<p>生徒の自主的な活動のひとつとして、学級委員や各教科係などの学級内の係
-					と、各学級数名ずつの生徒で構成される委員会があり、どの生徒もいずれかの役割を担うことになります。
-					委員会活動は自分の役割と向き合いながら、自分をひとまわり成長させてくれる場となっています。
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                questionLabel.textContent = `質問：${currentQuestion.question}`;
+                resultDiv.textContent = '';
+                explanationDiv.style.display = "none"; // 解説を非表示にします
+                document.getElementById('answer').value = '';
+                nextButton.style.display = "none"; // 次の問題に進むボタンを非表示にします
+            } else {
+                questionLabel.textContent = '全ての質問が終了しました。';
+                resultDiv.textContent = '';
+                explanationDiv.textContent = '';
+                nextButton.style.display = "none"; // 最後の問題後にボタンを非表示にします
+            }
+        }
 
-				</p>
-			</li>
-		</ul>
-	</div>
-</section>
-
-<footer id="footer">
-	Create by 
-	<a href="https://www.instagram.com/0ga_4/">Ogawa
-
-	</a>
-</footer>
-
+        window.onload = function() {
+            const questionLabel = document.getElementById('question-label');
+            const currentQuestion = questions[currentQuestionIndex];
+            questionLabel.textContent = `質問：${currentQuestion.question}`;
+        };
+    </script>
 </body>
 </html>
