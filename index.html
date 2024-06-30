@@ -29,6 +29,7 @@
             width: 100%; /* 幅を100%に設定 */
             max-width: 500px; /* 最大幅を設定 */
             text-align: center;
+            overflow-x: hidden; /* 横方向のオーバーフローを制御 */
         }
         label {
             display: block;
@@ -37,7 +38,7 @@
             text-align: left; /* テキストを左寄せにします */
         }
         input[type="text"] {
-            width: 100%;
+            width: calc(100% - 20px); /* 幅を調整して、余白を含めて全体に収まるようにします */
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
