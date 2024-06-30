@@ -45,6 +45,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 1em; /* フォントサイズを調整 */
         }
         button {
             background-color: #4682b4;
@@ -86,7 +87,7 @@
     <h1>クイズ</h1>
     <form id="quiz-form">
         <label id="question-label" for="answer">質問：組織で働く人にそれぞれ割り当てられた仕事を何というか？</label>
-        <input type="text" id="answer" name="answer">
+        <input type="text" id="answer" name="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <button type="button" onclick="checkAnswer()">回答</button>
         <div id="result"></div>
         <div id="explanation"></div>
