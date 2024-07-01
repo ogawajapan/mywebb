@@ -84,9 +84,9 @@
     </style>
 </head>
 <body>
-    <h1>用語クイズ</h1>
+    <h1>地学クイズ</h1>
     <form id="quiz-form">
-        <label id="question-label" for="answer">質問：組織で働く人にそれぞれ割り当てられた仕事を何というか？</label>
+        <label id="question-label" for="answer">質問：地下の岩石が破壊されることで大地が揺れる現象を何というか？</label>
         <input type="text" id="answer" name="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <button type="button" onclick="checkAnswer()">回答</button>
         <div id="result"></div>
@@ -97,30 +97,35 @@
     <script>
         const questions = [
             {
-                question: "組織で働く人にそれぞれ割り当てられた仕事を何というか？",
-                correctAnswer: "職務",
-                explanation: "それぞれの役割や責任を持って行う仕事のことです。"
+                question: "地下の岩石が破壊されることで大地が揺れる現象を何というか？",
+                correctAnswer: "地震",
+                explanation: "解説しようがない"
             },
             {
-                question: "職務を分担する組織上の地位のことを何というか？",
-                correctAnswer: "職位",
-                explanation: "組織内での地位や役割を表す用語です。"
+                question: "岩石中のある面をはさむ両側が短時間にずれた変形を何というか？",
+                correctAnswer: "断層",
+                explanation: "解説しようがない"
             },
             {
-                question: "取締役会や社長，副社長，専務などがある，企業経営の基本的な方針を決定し，経営責任を持つ職位のことを何というか？",
-                correctAnswer: "経営者層",
-                explanation: "企業の重要な意思決定を行い、経営責任を負う役職のことです。"
+                question: "断層面上で岩石の破壊が始まった点を何というか？",
+                correctAnswer: "震源",
+                explanation: "解説しようがない"
             },
             {
-                question: "企業経営の基本的な方針を具体化する行動計画を立て，従業員の仕事の進め方を把握し，評価する職位を何というか？",
-                correctAnswer: "管理者層",
-                explanation: "企業の戦略を具体化し、従業員の業務を管理する役職です。"
+                question: "地震をおこした断層。この一部が地表に現れたものを何というか？",
+                correctAnswer: "震源断層",
+                explanation: "解説しようがない"
             },
             {
                 question: "仕入，製品ごと，事業ごと，地域ごとなどに部門化して，それぞれの部門の事業を行う組織のことを何というか？，販売などの職能や機能などで編成される組織を何というか？",
                 correctAnswer: "職能別組織",
-                explanation: "企業を異なる部門に分け、それぞれの部門が特定の事業を行う組織構造です。"
-            }
+                explanation: "解説しようがない"
+            },
+            {
+                question: "仕入，製品ごと，事業ごと，地域ごとなどに部門化して，それぞれの部門の事業を行う組織のことを何というか？，販売などの職能や機能などで編成される組織を何というか？",
+                correctAnswer: "職能別組織",
+                explanation: "解説しようがない"
+            },
         ];
 
         let currentQuestionIndex = 0;
